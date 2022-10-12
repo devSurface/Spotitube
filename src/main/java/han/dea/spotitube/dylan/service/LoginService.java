@@ -22,12 +22,12 @@ public class LoginService {
     {
         try {
             return Response
-                    .ok(loginController.authenticate(request)).build();
+                .ok(loginController.authenticate(request)).build();
         }
         catch (UnauthorizedException e) {
             return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .build();
+                .status(Response.Status.UNAUTHORIZED)
+                .build();
         }
     }
 

@@ -1,7 +1,46 @@
 package han.dea.spotitube.dylan.datasource.dao;
 
 
+import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
+import han.dea.spotitube.dylan.controllers.dto.TrackDTO;
+import han.dea.spotitube.dylan.datasource.ConnectionManager;
+import han.dea.spotitube.dylan.datasource.datamappers.TrackDataMapper;
+import jakarta.inject.Inject;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class TrackDAO {
+    private ConnectionManager connectionManager;
+    private TrackDataMapper dataMapper;
+    public ArrayList<TrackDTO> getAllTracksInPlaylist(int playlistId) {
+        ArrayList<TrackDTO> response = new ArrayList<>();
 
+        try (Connection con = ConnectionManager.getConnection()) {
+            PreparedStatement statement = con.prepareStatement("SELECT id, title, performer, duration, album, playcount, publicationDate, description, offlineAvailable FROM track t JOIN playlist_track pt ON pt.track_id = t.id WHERE pt.playlist_id = ?");
+
+            statement.setInt(1, playlistId);
+            ResultSet result = statement.executeQuery();
+
+            response = dataMapper.MapResultSetToDTO(result);
+            return response;
+        } catch (SQLException exception) {
+            System.out.print(exception);
+        }
+
+        return response;
+    }
+
+    @Inject
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
+    @Inject
+    public void setDataMapper(TrackDataMapper dataMapper) {
+        this.dataMapper = dataMapper;
+    }
 }

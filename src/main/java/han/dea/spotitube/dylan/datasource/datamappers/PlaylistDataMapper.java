@@ -15,6 +15,8 @@ public class PlaylistDataMapper {
                 rs.getString("name"),
                 rs.getInt("owner_id")
             );
+
+            playlists.add(playlist);
         }
 
         return playlists;

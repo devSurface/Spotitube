@@ -15,7 +15,7 @@ public class PlaylistDAO {
 
 
     public ArrayList<PlaylistDTO> getAll() {
-        ArrayList<PlaylistDTO> response = new ArrayList<PlaylistDTO>();
+        ArrayList<PlaylistDTO> response = new ArrayList<>();
 
         try (Connection con = ConnectionManager.getConnection()) {
             PreparedStatement statement = con.prepareStatement("SELECT id, owner_id, name FROM playlist");

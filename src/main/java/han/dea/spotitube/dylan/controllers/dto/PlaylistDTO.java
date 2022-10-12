@@ -31,8 +31,8 @@ public class PlaylistDTO {
         this.name = name;
     }
 
-    public boolean isOwner() {
-        return (owner == null);
+    public boolean isOwner(int id) {
+        return (owner == id);
     }
 
     public int getOwner() {

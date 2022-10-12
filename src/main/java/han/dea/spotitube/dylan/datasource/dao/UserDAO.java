@@ -65,30 +65,26 @@ public class UserDAO
 
         throw new UnauthorizedException();
     }
-//
-//    public boolean verifyToken(String token) throws UnauthorizedException
-//    {
-//        User user = new User();
-//
-//        try (Connection connection = dataSource.getConnection()) {
-//            PreparedStatement statement = connection.prepareStatement(FETCH_USER_BY_TOKEN_QUERY);
-//            statement.setString(1, token);
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                user.setId(resultSet.getInt("id"));
-//                user.setName(resultSet.getString("name"));
-//                user.setToken(token);
-//            }
-//        }
-//        catch (SQLException exception) {
-//            logger.error("Er is iets misgegaan bij de query, fout: {}", exception.toString());
-//        }
-//
-//        if (user.getName() != null) {
-//            return user;
-//        }
-//
-//        throw new UnauthorizedException();
-//    }
+
+    public boolean verifyToken(String token) throws UnauthorizedException
+    {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT username from user WHERE token = ?");
+            statement.setString(1, token);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return true;
+            } else {
+                throw new UnauthorizedException();
+            }
+        }
+        catch (SQLException exception) {
+            System.out.println(exception);
+        }
+
+
+        return false;
+    }
 }
