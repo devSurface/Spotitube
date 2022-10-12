@@ -14,10 +14,7 @@ public class TrackController {
     public void getAvailableTracks() {}
     public void addTrackToPlaylist() {}
     public void removeTrackFromPlaylist() {}
-    // not needed but will do:
-    public void addTrack() {}
-    public void deleteTrack() {}
-    public void updateTrack() {}
+ 
 
     @Inject
     public void setTrackDAO(TrackDAO trackDAO) {
