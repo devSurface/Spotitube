@@ -3,7 +3,7 @@ package han.dea.spotitube.dylan.datasource.dao;
 import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
 import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
 import han.dea.spotitube.dylan.datasource.ConnectionManager;
-import jakarta.ws.rs.BadRequestException;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.junit.rules.ExpectedException;
 import org.mockito.Mockito;
 
 import javax.sql.DataSource;
+import javax.ws.rs.BadRequestException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,7 +65,7 @@ public class PlaylistDAOTest {
         // Act
         List<PlaylistDTO> playlists = playlistDAO.getAll();
 
-        // Assert
+        // Act & Assert
         assertEquals(playlists.get(0).getId(), 1);
     }
 
@@ -78,11 +79,8 @@ public class PlaylistDAOTest {
         Mockito.when(connection.prepareStatement(expectedQuery)).thenReturn(preparedStatement);
         Mockito.when(preparedStatement.executeQuery()).thenThrow(new SQLException());
 
-        // Act
-       // List<PlaylistDTO> playlists = playlistDAO.getAll();
-
-        // Assert
-        assertThrows(SQLException.class, () -> playlistDAO.getAll());
+        // Act & Assert
+        assertThrows(BadRequestException.class, () -> playlistDAO.getAll());
     }
 }
 //

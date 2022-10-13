@@ -27,8 +27,8 @@ public class PlaylistDAO {
 
             response = dataMapper.MapResultSetToDTO(result);
         } catch (SQLException exception) {
-            exception.setNextException(exception);
-
+            System.out.println(exception);
+            throw new javax.ws.rs.BadRequestException();
         }
 
         return response;
