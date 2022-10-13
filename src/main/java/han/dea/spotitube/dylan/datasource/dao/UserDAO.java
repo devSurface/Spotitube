@@ -6,6 +6,7 @@ import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
 import han.dea.spotitube.dylan.datasource.ConnectionManager;
 import han.dea.spotitube.dylan.datasource.datamappers.UserDataMapper;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.BadRequestException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,11 +18,6 @@ public class UserDAO
 {
     private UserDataMapper userDataMapper;
 
-    @Inject
-    public void setUserDataMapper(UserDataMapper userDataMapper) {
-        this.userDataMapper = userDataMapper;
-        System.out.print("UserDAO: UserDataMapper injected");
-    }
     public LoginResponseDTO authenticate(UserDTO user) throws UnauthorizedException {
         try (Connection connection = ConnectionManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username = ? and password = ?");
@@ -86,5 +82,28 @@ public class UserDAO
 
 
         return false;
+    }
+
+
+    @Inject
+    public void setUserDataMapper(UserDataMapper userDataMapper) {
+        this.userDataMapper = userDataMapper;
+        System.out.print("UserDAO: UserDataMapper injected");
+    }
+
+    public UserDTO getUserBasedOnToken(String token) {
+        try (Connection connection = ConnectionManager.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE token = ?");
+            statement.setString(1, token);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            return userDataMapper.MapToDTO(resultSet);
+        }
+        catch (SQLException exception) {
+            System.out.println(exception);
+            throw new BadRequestException();
+        }
+
     }
 }

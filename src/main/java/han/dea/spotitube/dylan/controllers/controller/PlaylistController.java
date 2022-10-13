@@ -6,6 +6,7 @@ import han.dea.spotitube.dylan.datasource.dao.PlaylistDAO;
 import han.dea.spotitube.dylan.datasource.dao.TrackDAO;
 import jakarta.inject.Inject;
 import jakarta.json.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -14,8 +15,10 @@ import java.util.Arrays;
 public class PlaylistController {
     private PlaylistDAO playlistDAO;
     private TrackDAO trackDAO;
+    private LoginController loginController;
     public JSONObject getAllPlaylists() {
         ArrayList<PlaylistDTO> playlists = playlistDAO.getAll();
+
         int length = 0;
         for (PlaylistDTO playlist : playlists) {
             ArrayList<TrackDTO> tracks = trackDAO.getAllTracksInPlaylist(playlist.getId());
@@ -24,6 +27,8 @@ public class PlaylistController {
             for(TrackDTO track : playlist.getTracks()) {
                 length += track.getDuration();
             }
+
+            playlist.setOwnerId(null);
         }
 
         JSONObject response = new JSONObject();
@@ -32,9 +37,18 @@ public class PlaylistController {
 
         return response;
     }
-    public void deletePlaylist() {}
-    public void addPlaylist() {}
-    public void editPlaylist() {}
+    public JSONObject deletePlaylist(int playlistId) {
+        playlistDAO.delete(playlistId);
+        return getAllPlaylists();
+    }
+    public JSONObject addPlaylist(PlaylistDTO playlist, String token) {
+        playlistDAO.add(playlist, loginController.getUserBasedOnToken(token));
+        return getAllPlaylists();
+    }
+    public JSONObject editPlaylist(PlaylistDTO playlist, String token) {
+        playlistDAO.update(playlist, loginController.getUserBasedOnToken(token));
+        return getAllPlaylists();
+    }
 
 
     @Inject
@@ -45,5 +59,10 @@ public class PlaylistController {
     @Inject
     public void setPlaylistDAO(PlaylistDAO playlistDAO) {
         this.playlistDAO = playlistDAO;
+    }
+
+    @Inject
+    public void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
     }
 }

@@ -5,13 +5,22 @@ import java.util.ArrayList;
 public class PlaylistDTO {
 
     private int id;
-    private Integer owner;
+    private boolean owner;
+    private Integer owner_id;
     private String name;
     private ArrayList<TrackDTO> tracks;
 
-    public PlaylistDTO(int id, String name, int owner) {
+    public PlaylistDTO() {}
+    public PlaylistDTO(int id, boolean owner, String name, ArrayList<TrackDTO> tracks) {
+        this.id = id;
+        this.owner = owner;
+        this.name = name;
+        this.tracks = tracks;
+    }
+    public PlaylistDTO(int id, String name, int owner_id, boolean owner) {
         this.id = id;
         this.name = name;
+        this.owner_id = owner_id;
         this.owner = owner;
     }
 
@@ -31,15 +40,20 @@ public class PlaylistDTO {
         this.name = name;
     }
 
-    public boolean isOwner(int id) {
-        return (owner == id);
+    public boolean isOwner() {
+        if (owner_id == 0 || owner_id == null) {
+            this.owner = false;
+        } else {
+            this.owner = true;
+        }
+        return owner;
     }
 
-    public int getOwner() {
+    public boolean getOwner() {
         return this.owner;
     }
 
-    public void setOwner(int owner) {
+    public void setOwner(boolean owner) {
         this.owner = owner;
     }
 
@@ -49,5 +63,13 @@ public class PlaylistDTO {
 
     public ArrayList<TrackDTO> getTracks() {
         return tracks;
+    }
+
+    public Integer getOwnerId() {
+        return owner_id;
+    }
+
+    public void setOwnerId(Integer owner_id) {
+        this.owner_id = owner_id;
     }
 }

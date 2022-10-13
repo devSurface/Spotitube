@@ -13,7 +13,8 @@ public class PlaylistDataMapper {
             PlaylistDTO playlist = new PlaylistDTO (
                 rs.getInt("id"),
                 rs.getString("name"),
-                rs.getInt("owner_id")
+                rs.getInt("owner_id"),
+                rs.getInt("owner_id") == 0 ? false : true
             );
 
             playlists.add(playlist);

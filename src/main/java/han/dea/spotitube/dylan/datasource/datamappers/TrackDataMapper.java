@@ -15,7 +15,7 @@ public class TrackDataMapper {
                 rs.getString("title"),
                 rs.getString("performer"),
                 rs.getString("album"),
-                rs.getDate("publicationDate") == null ? null : null,
+                rs.getDate("publicationDate") != null ? rs.getDate("publicationDate").toString() : null,
                 rs.getString("description"),
                 rs.getInt("duration"),
                 rs.getInt("playCount"),

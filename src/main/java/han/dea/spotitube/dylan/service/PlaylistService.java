@@ -2,6 +2,8 @@ package han.dea.spotitube.dylan.service;
 
 import han.dea.spotitube.dylan.controllers.controller.LoginController;
 import han.dea.spotitube.dylan.controllers.controller.PlaylistController;
+import han.dea.spotitube.dylan.controllers.controller.TrackController;
+import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
 import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -12,6 +14,7 @@ import jakarta.ws.rs.core.Response;
 public class PlaylistService {
     private LoginController loginController;
     private PlaylistController playlistController;
+    private TrackController  trackController;
 
     @Path("/")
     @GET
@@ -28,10 +31,73 @@ public class PlaylistService {
                     .build();
         }
     }
-    public void deletePlaylist() {}
-    public void addPlaylist() {}
-    public void editPlaylist() {}
 
+    @Path("/{id}/tracks")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllTracksInPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
+        try {
+            loginController.verifyToken(token);
+            return Response.ok(trackController.getAllTracksInPlaylist(playlistId)).build();
+        }
+        catch (UnauthorizedException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .build();
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletePlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
+        try {
+            loginController.verifyToken(token);
+            return Response.ok(playlistController.deletePlaylist(playlistId)).build();
+        }
+        catch (UnauthorizedException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .build();
+        }
+    }
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {
+        try {
+            loginController.verifyToken(token);
+            return Response.ok(playlistController.addPlaylist(playlist, token)).build();
+        }
+        catch (UnauthorizedException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .build();
+        }
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {
+        try {
+            loginController.verifyToken(token);
+            return Response.ok(playlistController.editPlaylist(playlist, token)).build();
+        }
+        catch (UnauthorizedException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .build();
+        }
+    }
+
+
+    @Inject
+    private void setTrackController(TrackController trackController) {
+        this.trackController = trackController;
+    }
     @Inject
     private void setLoginController(LoginController loginController) {
         this.loginController = loginController;

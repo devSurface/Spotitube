@@ -10,7 +10,8 @@ public class UserDataMapper {
         if (rs.next()) {
             UserDTO user = new UserDTO(
                     rs.getString("username"),
-                    rs.getString("password")
+                    rs.getString("password"),
+                    rs.getInt("id")
             );
 
             return user;

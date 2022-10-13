@@ -18,6 +18,9 @@ public class LoginController {
         }
     }
 
+    public UserDTO getUserBasedOnToken(String token)  {
+        return userDAO.getUserBasedOnToken(token);
+    }
     public boolean verifyToken(String token) throws UnauthorizedException {
         if (userDAO.verifyToken(token)) {
             return true;
