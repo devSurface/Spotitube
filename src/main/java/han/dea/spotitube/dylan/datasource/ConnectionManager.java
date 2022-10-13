@@ -10,7 +10,7 @@ public class ConnectionManager {
     private static Connection con;
 
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         DatabaseProperties databaseProperties = new DatabaseProperties();
             try {
                 con = DriverManager.getConnection(databaseProperties.getProperties());

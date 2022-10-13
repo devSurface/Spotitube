@@ -27,8 +27,6 @@ public class PlaylistController {
             for(TrackDTO track : playlist.getTracks()) {
                 length += track.getDuration();
             }
-
-            playlist.setOwnerId(null);
         }
 
         JSONObject response = new JSONObject();

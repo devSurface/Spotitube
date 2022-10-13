@@ -16,10 +16,11 @@ import java.util.UUID;
 
 public class UserDAO
 {
+    private ConnectionManager connectionManager;
     private UserDataMapper userDataMapper;
 
     public LoginResponseDTO authenticate(UserDTO user) throws UnauthorizedException {
-        try (Connection connection = ConnectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username = ? and password = ?");
             statement.setString(1, user.getUser());
             statement.setString(2, user.getPassword());
@@ -46,7 +47,7 @@ public class UserDAO
 
 
     private LoginResponseDTO addToken(UserDTO user) throws UnauthorizedException {
-        try (Connection connection = ConnectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             String randomToken = UUID.randomUUID().toString();
             PreparedStatement statement = connection.prepareStatement("UPDATE user SET token = ? WHERE username = ?");
             statement.setString(1, randomToken);
@@ -64,7 +65,7 @@ public class UserDAO
 
     public boolean verifyToken(String token) throws UnauthorizedException
     {
-        try (Connection connection = ConnectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT username from user WHERE token = ?");
             statement.setString(1, token);
 
@@ -92,7 +93,7 @@ public class UserDAO
     }
 
     public UserDTO getUserBasedOnToken(String token) {
-        try (Connection connection = ConnectionManager.getConnection()) {
+        try (Connection connection = connectionManager.getConnection()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE token = ?");
             statement.setString(1, token);
 
@@ -105,5 +106,10 @@ public class UserDAO
             throw new BadRequestException();
         }
 
+    }
+
+    @Inject
+    public void setConnectionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
     }
 }

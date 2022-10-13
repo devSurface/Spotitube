@@ -14,9 +14,20 @@
           <element id="module-output" name="Spotitube" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-common:unknown" />
           <element id="library" level="project" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" />
           <element id="library" level="project" name="Maven: junit:junit:4.10" />
           <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.1" />
+          <element id="library" level="project" name="Maven: org.mockito:mockito-junit-jupiter:4.8.0" />
+          <element id="library" level="project" name="Maven: org.mockito:mockito-core:4.8.0" />
+          <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy:1.12.14" />
+          <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy-agent:1.12.14" />
+          <element id="library" level="project" name="Maven: org.objenesis:objenesis:3.2" />
+          <element id="library" level="project" name="Maven: org.junit.jupiter:junit-jupiter-api:5.9.1" />
+          <element id="library" level="project" name="Maven: org.opentest4j:opentest4j:1.2.0" />
+          <element id="library" level="project" name="Maven: org.junit.platform:junit-platform-commons:1.9.1" />
+          <element id="library" level="project" name="Maven: org.apiguardian:apiguardian-api:1.1.2" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.30" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.19.4" />
         </element>

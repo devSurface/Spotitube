@@ -19,13 +19,25 @@ public class TrackController {
         tracks.put("tracks", trackDAO.getAvailableTracks(playlistId));
         return tracks;
     }
-    public void addTrackToPlaylist() {}
-    public void removeTrackFromPlaylist() {}
+    public JSONObject addTrackToPlaylist(int playlistId, TrackDTO track) {
+        trackDAO.addTrackToPlaylist(playlistId, track);
+
+        JSONObject tracks = new JSONObject();
+        tracks.put("tracks", trackDAO.getAllTracksInPlaylist(playlistId));
+        return tracks;
+    }
+    public JSONObject removeTrackFromPlaylist(int playlistId, int trackId) {
+        trackDAO.removeTrackFromPlaylist(playlistId, trackId);
+
+        JSONObject tracks = new JSONObject();
+        tracks.put("tracks", trackDAO.getAllTracksInPlaylist(playlistId));
+        return tracks;
+    }
+
  
 
     @Inject
     public void setTrackDAO(TrackDAO trackDAO) {
         this.trackDAO = trackDAO;
     }
-
 }

@@ -1,4 +1,4 @@
-package han.dea.spotitube.dylan.service;
+package han.dea.spotitube.dylan.controller;
 
 import han.dea.spotitube.dylan.controllers.controller.LoginController;
 import han.dea.spotitube.dylan.controllers.controller.PlaylistController;
@@ -10,13 +10,13 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/playlists")
+@Path("/")
 public class PlaylistService {
     private LoginController loginController;
     private PlaylistController playlistController;
     private TrackController  trackController;
 
-    @Path("/")
+    @Path("playlists")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -32,7 +32,7 @@ public class PlaylistService {
         }
     }
 
-    @Path("/{id}/tracks")
+    @Path("playlists/{id}/tracks")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllTracksInPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
@@ -48,7 +48,7 @@ public class PlaylistService {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("playlists/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deletePlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
         try {
@@ -62,7 +62,7 @@ public class PlaylistService {
         }
     }
     @POST
-    @Path("/")
+    @Path("playlists")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {
@@ -78,7 +78,7 @@ public class PlaylistService {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("playlists/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {

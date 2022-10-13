@@ -1,5 +1,7 @@
 package han.dea.spotitube.dylan.controllers.dto;
 
+import jakarta.json.bind.annotation.JsonbVisibility;
+
 import java.util.ArrayList;
 
 public class PlaylistDTO {
@@ -41,7 +43,7 @@ public class PlaylistDTO {
     }
 
     public boolean isOwner() {
-        if (owner_id == 0 || owner_id == null) {
+        if (owner_id == null || owner_id == 0 ) {
             this.owner = false;
         } else {
             this.owner = true;
@@ -65,11 +67,4 @@ public class PlaylistDTO {
         return tracks;
     }
 
-    public Integer getOwnerId() {
-        return owner_id;
-    }
-
-    public void setOwnerId(Integer owner_id) {
-        this.owner_id = owner_id;
-    }
 }

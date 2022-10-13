@@ -6,6 +6,7 @@ public class TrackDTO {
     private int id, duration, playcount;
     private boolean offlineAvailable;
 
+    public TrackDTO() {}
     public TrackDTO(int id,
                     String title,
                     String performer,

@@ -1,4 +1,4 @@
-package han.dea.spotitube.dylan.service;
+package han.dea.spotitube.dylan.controller;
 
 import han.dea.spotitube.dylan.controllers.controller.LoginController;
 import han.dea.spotitube.dylan.controllers.dto.UserDTO;
