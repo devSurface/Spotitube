@@ -32,20 +32,6 @@ public class PlaylistService {
         }
     }
 
-    @Path("playlists/{id}/tracks")
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllTracksInPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
-        try {
-            loginController.verifyToken(token);
-            return Response.ok(trackController.getAllTracksInPlaylist(playlistId)).build();
-        }
-        catch (UnauthorizedException e) {
-            return Response
-                    .status(Response.Status.UNAUTHORIZED)
-                    .build();
-        }
-    }
 
     @DELETE
     @Path("playlists/{id}")

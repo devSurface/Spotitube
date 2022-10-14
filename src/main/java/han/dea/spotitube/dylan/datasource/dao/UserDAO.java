@@ -31,7 +31,7 @@ public class UserDAO
                 throw new UnauthorizedException();
             } else {
                 if (result.getString("token") != null) {
-                        return new LoginResponseDTO(result.getString("token"), result.getString("username"));
+                    return new LoginResponseDTO(result.getString("username"), result.getString("token"));
                 } else {
                     return addToken(user);
                 }
@@ -46,7 +46,7 @@ public class UserDAO
     }
 
 
-    private LoginResponseDTO addToken(UserDTO user) throws UnauthorizedException {
+    LoginResponseDTO addToken(UserDTO user) throws UnauthorizedException {
         try (Connection connection = connectionManager.getConnection()) {
             String randomToken = UUID.randomUUID().toString();
             PreparedStatement statement = connection.prepareStatement("UPDATE user SET token = ? WHERE username = ?");

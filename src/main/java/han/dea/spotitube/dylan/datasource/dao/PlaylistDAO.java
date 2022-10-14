@@ -5,7 +5,7 @@ import han.dea.spotitube.dylan.controllers.dto.UserDTO;
 import han.dea.spotitube.dylan.datasource.ConnectionManager;
 import han.dea.spotitube.dylan.datasource.datamappers.PlaylistDataMapper;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.BadRequestException;
+import javax.ws.rs.BadRequestException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class PlaylistDAO {
             response = dataMapper.MapResultSetToDTO(result);
         } catch (SQLException exception) {
             System.out.println(exception);
-            throw new javax.ws.rs.BadRequestException();
+            throw new BadRequestException();
         }
 
         return response;
@@ -55,7 +55,6 @@ public class PlaylistDAO {
 
             statement.executeUpdate();
         } catch (SQLException exception) {
-            System.out.println(exception);
             throw new BadRequestException();
         }
     }

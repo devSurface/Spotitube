@@ -1,25 +1,26 @@
-package han.dea.spotitube.dylan.controller;
 
-import han.dea.spotitube.dylan.controllers.controller.PlaylistController;
-import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
-import han.dea.spotitube.dylan.controllers.dto.TrackDTO;
-import han.dea.spotitube.dylan.datasource.dao.PlaylistDAO;
-import han.dea.spotitube.dylan.datasource.dao.TrackDAO;
-import jakarta.ws.rs.BadRequestException;
-import org.json.simple.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+        package han.dea.spotitube.dylan.controller;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+        import han.dea.spotitube.dylan.controllers.controller.PlaylistController;
+        import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
+        import han.dea.spotitube.dylan.controllers.dto.TrackDTO;
+        import han.dea.spotitube.dylan.datasource.dao.PlaylistDAO;
+        import han.dea.spotitube.dylan.datasource.dao.TrackDAO;
+        import jakarta.ws.rs.BadRequestException;
+        import org.json.simple.JSONObject;
+        import org.junit.jupiter.api.BeforeEach;
+        import org.junit.jupiter.api.Test;
+        import org.mockito.Mock;
+        import org.mockito.Mockito;
+        import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+        import java.lang.reflect.Array;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import static org.junit.jupiter.api.Assertions.*;
+        import static org.mockito.ArgumentMatchers.isA;
+        import static org.mockito.Mockito.*;
 
 public class PlaylistControllerTest
 {
