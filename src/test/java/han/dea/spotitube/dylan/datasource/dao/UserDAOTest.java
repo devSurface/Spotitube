@@ -3,24 +3,21 @@ package han.dea.spotitube.dylan.datasource.dao;
 import han.dea.spotitube.dylan.controllers.dto.LoginResponseDTO;
 import han.dea.spotitube.dylan.controllers.dto.UserDTO;
 import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
-import han.dea.spotitube.dylan.datasource.ConnectionManager;
+import han.dea.spotitube.dylan.datasource.dbconnection.ConnectionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import javax.ws.rs.BadRequestException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class TestUserDAOTest {
+public class UserDAOTest {
 
     private UserDAO userDAO;
     private ConnectionManager connectionManager;
@@ -44,20 +41,12 @@ public class TestUserDAOTest {
         userDAO = spy(userDAO);
     }
 
-    /**
-     * DAO FOR:
-     * [POST] /login
-     */
-
-
     @Test
     public void authenticateSuccessWithToken() throws SQLException, UnauthorizedException {
         // Arrange
         String expectedQuery = "SELECT * FROM user WHERE username = ? and password = ?";
         Mockito.when(connectionManager.getConnection()).thenReturn(connection);
         Mockito.when(connection.prepareStatement(expectedQuery)).thenReturn(preparedStatement);
-//        Mockito.when(userDTO.getUser()).thenReturn("dylan");
-//        Mockito.when(userDTO.getPassword()).thenReturn("dylan");
 
         Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
         Mockito.when(resultSet.next()).thenReturn(true).thenReturn(true);
@@ -112,5 +101,37 @@ public class TestUserDAOTest {
         // Assert
         assertThrows(UnauthorizedException.class, () -> userDAO.addToken(userDTO));
         verify(userDAO, times(1)).addToken(userDTO);
+    }
+
+    @Test
+    public void verifyToken() throws SQLException, UnauthorizedException {
+        // Arrange
+        String expectedQuery = "SELECT username from user WHERE token = ?";
+        Mockito.when(connectionManager.getConnection()).thenReturn(connection);
+        Mockito.when(connection.prepareStatement(expectedQuery)).thenReturn(preparedStatement);
+        Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.next()).thenReturn(true);
+
+        // Act & Assert
+        assertEquals(true, userDAO.verifyToken("test"));
+    }
+
+    @Test
+    public void verifyTokenFails() throws SQLException, UnauthorizedException {
+        // Arrange
+        String expectedQuery = "SELECT username from user WHERE token = ?";
+        Mockito.when(connectionManager.getConnection()).thenReturn(connection);
+        Mockito.when(connection.prepareStatement(expectedQuery)).thenReturn(preparedStatement);
+        Mockito.when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        Mockito.when(resultSet.next()).thenReturn(false);
+
+        // Act & Assert
+        assertThrows(UnauthorizedException.class, () -> userDAO.verifyToken("test"));
+        verify(userDAO, times(1)).verifyToken("test");
+    }
+
+    @Test
+    public void getUserBasedOnToken () {
+        
     }
 }

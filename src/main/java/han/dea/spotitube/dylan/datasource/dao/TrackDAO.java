@@ -1,12 +1,11 @@
 package han.dea.spotitube.dylan.datasource.dao;
 
 
-import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
 import han.dea.spotitube.dylan.controllers.dto.TrackDTO;
-import han.dea.spotitube.dylan.datasource.ConnectionManager;
+import han.dea.spotitube.dylan.datasource.dbconnection.ConnectionManager;
 import han.dea.spotitube.dylan.datasource.datamappers.TrackDataMapper;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.BadRequestException;
+import javax.ws.rs.BadRequestException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

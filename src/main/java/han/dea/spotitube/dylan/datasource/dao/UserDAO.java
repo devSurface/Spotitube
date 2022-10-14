@@ -3,7 +3,7 @@ package han.dea.spotitube.dylan.datasource.dao;
 import han.dea.spotitube.dylan.controllers.dto.LoginResponseDTO;
 import han.dea.spotitube.dylan.controllers.dto.UserDTO;
 import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
-import han.dea.spotitube.dylan.datasource.ConnectionManager;
+import han.dea.spotitube.dylan.datasource.dbconnection.ConnectionManager;
 import han.dea.spotitube.dylan.datasource.datamappers.UserDataMapper;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.BadRequestException;

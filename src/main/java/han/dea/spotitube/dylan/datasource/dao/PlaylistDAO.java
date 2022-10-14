@@ -2,7 +2,7 @@ package han.dea.spotitube.dylan.datasource.dao;
 
 import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
 import han.dea.spotitube.dylan.controllers.dto.UserDTO;
-import han.dea.spotitube.dylan.datasource.ConnectionManager;
+import han.dea.spotitube.dylan.datasource.dbconnection.ConnectionManager;
 import han.dea.spotitube.dylan.datasource.datamappers.PlaylistDataMapper;
 import jakarta.inject.Inject;
 import javax.ws.rs.BadRequestException;

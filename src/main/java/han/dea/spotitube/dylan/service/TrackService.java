@@ -1,9 +1,8 @@
-package han.dea.spotitube.dylan.controller;
+package han.dea.spotitube.dylan.service;
 
 import han.dea.spotitube.dylan.controllers.controller.LoginController;
-import han.dea.spotitube.dylan.controllers.controller.PlaylistController;
 import han.dea.spotitube.dylan.controllers.controller.TrackController;
-import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
+import han.dea.spotitube.dylan.controllers.dto.TrackDTO;
 import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -11,19 +10,17 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 @Path("/")
-public class PlaylistService {
+public class TrackService {
     private LoginController loginController;
-    private PlaylistController playlistController;
-    private TrackController  trackController;
+    private TrackController trackController;
 
-    @Path("playlists")
+    @Path("playlists/{id}/tracks")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getAllPlaylist(@QueryParam("token") String token){
+    public Response getAllTracksInPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
         try {
             loginController.verifyToken(token);
-            return Response.ok(playlistController.getAllPlaylists()).build();
+            return Response.ok(trackController.getAllTracksInPlaylist(playlistId)).build();
         }
         catch (UnauthorizedException e) {
             return Response
@@ -32,14 +29,13 @@ public class PlaylistService {
         }
     }
 
-
-    @DELETE
-    @Path("playlists/{id}")
+    @Path("/tracks")
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletePlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId) {
+    public Response getAvailableTracks(@QueryParam("token") String token, @QueryParam("forPlaylist") int playlistId) {
         try {
             loginController.verifyToken(token);
-            return Response.ok(playlistController.deletePlaylist(playlistId)).build();
+            return Response.ok(trackController.getAvailableTracks(playlistId)).build();
         }
         catch (UnauthorizedException e) {
             return Response
@@ -47,14 +43,15 @@ public class PlaylistService {
                     .build();
         }
     }
+    @Path("playlists/{id}/tracks")
     @POST
-    @Path("playlists")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {
+    public Response addTrackToPlaylist(TrackDTO track, @QueryParam("token") String token, @PathParam("id") int playlistId) {
+        System.out.println(track.toString());
         try {
             loginController.verifyToken(token);
-            return Response.ok(playlistController.addPlaylist(playlist, token)).build();
+            return Response.ok(trackController.addTrackToPlaylist(playlistId, track)).build();
         }
         catch (UnauthorizedException e) {
             return Response
@@ -63,14 +60,13 @@ public class PlaylistService {
         }
     }
 
-    @PUT
-    @Path("playlists/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("playlists/{id}/tracks/{trackId}")
+    @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editPlaylist(@QueryParam("token") String token, PlaylistDTO playlist) {
+    public Response deleteTrackFromPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId, @PathParam("trackId") int trackId) {
         try {
             loginController.verifyToken(token);
-            return Response.ok(playlistController.editPlaylist(playlist, token)).build();
+            return Response.ok(trackController.removeTrackFromPlaylist(playlistId, trackId)).build();
         }
         catch (UnauthorizedException e) {
             return Response
@@ -78,19 +74,15 @@ public class PlaylistService {
                     .build();
         }
     }
+    public void removeTrackFromPlaylist() {}
 
-
-    @Inject
-    private void setTrackController(TrackController trackController) {
-        this.trackController = trackController;
-    }
     @Inject
     private void setLoginController(LoginController loginController) {
         this.loginController = loginController;
     }
 
     @Inject
-    private void setPlaylistController(PlaylistController playlistController) {
-        this.playlistController = playlistController;
+    private void setTrackController(TrackController trackController) {
+        this.trackController = trackController;
     }
 }

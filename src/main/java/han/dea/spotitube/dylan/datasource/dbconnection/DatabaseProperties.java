@@ -1,4 +1,4 @@
-package han.dea.spotitube.dylan.datasource.util;
+package han.dea.spotitube.dylan.datasource.dbconnection;
 
 import java.util.Properties;
 

@@ -1,6 +1,4 @@
-package han.dea.spotitube.dylan.datasource;
-
-import han.dea.spotitube.dylan.datasource.util.DatabaseProperties;
+package han.dea.spotitube.dylan.datasource.dbconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

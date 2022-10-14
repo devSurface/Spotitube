@@ -2,24 +2,16 @@ package han.dea.spotitube.dylan.datasource.dao;
 
 import han.dea.spotitube.dylan.controllers.dto.PlaylistDTO;
 import han.dea.spotitube.dylan.controllers.dto.UserDTO;
-import han.dea.spotitube.dylan.controllers.exceptions.UnauthorizedException;
-import han.dea.spotitube.dylan.datasource.ConnectionManager;
-import org.json.simple.JSONObject;
-import org.junit.Assert;
-import org.junit.Rule;
+import han.dea.spotitube.dylan.datasource.dbconnection.ConnectionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import javax.sql.DataSource;
 import javax.ws.rs.BadRequestException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,10 +37,7 @@ public class PlaylistDAOTest {
         playlistDAO = spy(playlistDAO);
     }
 
-    /**
-     * DAO FOR:
-     * [GET] /playlists
-     */
+
     @Test
     public void getAllPlaylists() throws SQLException {
         // Arrange
@@ -70,10 +59,7 @@ public class PlaylistDAOTest {
     }
 
 
-    /**
-     * DAO FOR:
-     * [GET] /playlists
-     */
+
     @Test
     public void getAllException() throws SQLException
     {
@@ -88,10 +74,6 @@ public class PlaylistDAOTest {
     }
 
 
-    /**
-     * DAO FOR:
-     * [DELETE] /playlists/{id}
-     */
     @Test
     public void removedSuccessful() throws SQLException {
         // Arrange
@@ -110,10 +92,6 @@ public class PlaylistDAOTest {
         verify(playlistDAO, times(1)).delete(1);
     }
 
-    /**
-     * DAO FOR:
-     * [DELETE] /playlists/{id}
-     */
     @Test
     public void removedException() throws SQLException {
         // Arrange
@@ -131,10 +109,6 @@ public class PlaylistDAOTest {
         verify(playlistDAO, times(1)).delete(1);
     }
 
-    /**
-     * DAO FOR:
-     * [POST] /playlists
-     */
     @Test
     public void addPlaylist() throws SQLException {
         // Arrange
@@ -151,10 +125,7 @@ public class PlaylistDAOTest {
         verify(playlistDAO, times(1)).add(testPlaylist, testUser);
     }
 
-    /**
-     * DAO FOR:
-     * [POST] /playlists
-     */
+
     @Test
     public void addException() throws SQLException {
         // Arrange
@@ -171,10 +142,7 @@ public class PlaylistDAOTest {
         verify(playlistDAO, times(1)).add(testPlaylist, testUser);
     }
 
-    /**
-     * DAO FOR:
-     * [PUT] /playlists/{id}
-     */
+
     @Test
     public void updatePlaylist() throws SQLException {
         // Arrange
@@ -191,10 +159,7 @@ public class PlaylistDAOTest {
         verify(playlistDAO, times(1)).update(testPlaylist, testUser);
     }
 
-    /**
-     * DAO FOR:
-     * [PUT] /playlists/{id}
-     */
+
     @Test
     public void updateException() throws SQLException {
         // Arrange
